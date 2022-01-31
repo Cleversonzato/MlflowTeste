@@ -1,27 +1,26 @@
+import os
 import argparse
 import mlflow
 import mlflow.sklearn
 import pandas as pd
 import numpy as np
+from pathlib import Path
 from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import ElasticNet
 from urllib.parse import urlparse
 
 
-pasta_dados_tratados = '../dados/tratados/'
-
-
 def argumentos():
     parser=argparse.ArgumentParser()
-    parser.add_argument('--alpha', defalt=0.5, type=float)
-    parser.add_argument('--tam_treino', defalt=0.7, type=float)
-    parser.add_argument('--random_state_amostra', defalt=1, type=int)
-    parser.add_argument('--random_state_modelo', defalt=42, type=int)
-    parser.add_argument('--l1', defalt=0.5, type=float)
+    parser.add_argument('--alpha', default=0.5, type=float)
+    parser.add_argument('--tam_treino', default=0.7, type=float)
+    parser.add_argument('--random_state_amostra', default=1, type=int)
+    parser.add_argument('--random_state_modelo', default=42, type=int)
+    parser.add_argument('--l1', default=0.5, type=float)
     args = parser.parse_args()
 
-    return args.apha, args.tam_treino, args.random_state_amostra, args.random_state_modelo, args.l1
+    return  args.tam_treino, args.random_state_amostra, args.alpha, args.l1, args.random_state_modelo
 
 
 def metricas(actual, pred):
@@ -33,7 +32,9 @@ def metricas(actual, pred):
 
 
 def preparar_dados(tam_treino, random_state_amostra):
-    dados = pd.read_csv(pasta_dados_tratados + 'treino.csv')
+    pasta_dados_tratados = str(Path(os.path.dirname(os.path.realpath(__file__))).parent) + "/dados/tratados/"
+
+    dados = pd.read_csv(pasta_dados_tratados + 'dados_prontos.csv')
     treino, teste = train_test_split(dados, train_size=tam_treino, random_state=random_state_amostra)
     treino_x = treino[["Review Date","Cocoa Percent"]]
     teste_x = teste[["Review Date","Cocoa Percent"]]
@@ -56,7 +57,7 @@ def logs_resultados(alpha, l1, rmse, mae, r2):
     mlflow.log_metric("mae", mae)
 
 
-def executar_teste(alpha, tam_treino, random_state_amostra, random_state_modelo, l1):
+def executar_teste(tam_treino=0.7, random_state_amostra=42, alpha=0.5, l1=0.5, random_state_modelo=42):
     #dados
     (treino_x, teste_x, treino_y, teste_y) = preparar_dados(tam_treino, random_state_amostra)
 
@@ -79,13 +80,12 @@ def executar_teste(alpha, tam_treino, random_state_amostra, random_state_modelo,
             # There are other ways to use the Model Registry, which depends on the use case,
             # please refer to the doc for more information:
             # https://mlflow.org/docs/latest/model-registry.html#api-workflow
-            mlflow.sklearn.log_model(en, "model", registered_model_name="RedeElastica")
+            mlflow.sklearn.log_model(en, "model", registered_model_name="RedeElastica sem store?")
         else:
             mlflow.sklearn.log_model(en, "model")
 
 
 #Em execuções pelo cli, para pegar os parâmetros
-if __name__ == "__main__":         
-    executar_teste( 
-        argumentos() 
-    )
+if __name__ == "__main__":
+    (tam_treino, random_state_amostra, alpha, l1, random_state_modelo) = argumentos()
+    executar_teste(tam_treino, random_state_amostra, alpha, l1, random_state_modelo)

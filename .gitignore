@@ -1,3 +1,5 @@
 dados/brutos/*
 dados/tratados/*
 .*
+__pycache__
+mlruns
