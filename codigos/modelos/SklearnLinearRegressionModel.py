@@ -43,6 +43,7 @@ class SklearnLinearRegression(ModeloAbstrato):
         mlflow.log_metric("mae", mae)
         mlflow.set_tag("release.version", "teste?")
 
+        #Se alterar a versão do modelo:
         mlflow.sklearn.log_model( self.modelo, artifact_path='VoltaDaLinha', registered_model_name="VoltaDaLinha", signature=self.assinatura_modelo )
 
 

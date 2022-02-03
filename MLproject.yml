@@ -21,3 +21,8 @@ entry_points:
       tam_treino: {type: float, default: 0.7}
       random_state_amostra: {type: int, default: 1}
     command: "python3 exec.py VoltaDaLinha {tam_treino} {random_state_amostra}"
+  Pycaret:
+    parameters:
+      tam_treino: {type: float, default: 0.7}
+      nome_experimento: {type: str, default: "Experimento Pycaret"}
+    command: "python3 exec.py VoltaDaLinha {tam_treino} {nome_experimento}"

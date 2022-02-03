@@ -1,6 +1,8 @@
 import numpy as np
+import matplotlib.pyplot as plt
 from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score
 from abc import ABC, abstractmethod
+
 
 class ModeloAbstrato(ABC):
     """ Classe abstrata para os modelos"""
@@ -33,11 +35,9 @@ class ModeloAbstrato(ABC):
     def registrar():
         """ 
             Método definindo o que deve se logado, salvo ou registrado pelo mlflow, assim como qualquer outro procedimento ao final do experimento
+            Apenas aqui existirá o mlflow run (iniciado por mlflow.start_run() )
         """
         ...
-
-
-
 
 
 ### Funções uteis para os modelos

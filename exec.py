@@ -1,6 +1,7 @@
 import sys
 from codigos.experimentos.RedeElastica import executar_experimento_rede_elastica
 from codigos.experimentos.VoltaDaLinha import executar_experimento_volta_da_linha
+from codigos.experimentos.DoPycaret import executar_experimentos_pycaret
 from codigos.util.experimento import definir_argumentos_entrada
 
 
@@ -25,5 +26,15 @@ if __name__ == "__main__":
             ])
 
             executar_experimento_volta_da_linha( args.tam_treino, args.random_state_amostra )
+
+
+        else:
+            if sys.argv[1] == "DoPycaret":
+                args = definir_argumentos_entrada([
+                        ("--tam_treino", float, 0.7),
+                        ("--nome_experimento", str, "Teste Pycaret")
+                    ])
+
+                executar_experimentos_pycaret( args.tam_treino, args.nome_experimento )
 
 

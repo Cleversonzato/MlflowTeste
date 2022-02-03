@@ -10,13 +10,7 @@ def separar_treino_teste(
         random_state_amostra: int
     ):
     """ Separa um dataframe dados em treino e teste de acordo com os parâmetros utilizados. Nada muito especial""" 
-    treino, teste = train_test_split(dados, train_size=percentual_treino, random_state=random_state_amostra)
-    treino_x = treino.drop(alvo, axis=1)
-    teste_x = teste.drop(alvo, axis=1)
-    treino_y = treino[alvo]
-    teste_y = teste[alvo]    
-
-    return treino_x, teste_x, treino_y, teste_y
+    return train_test_split(dados.drop(alvo, axis=1), dados[alvo], train_size=percentual_treino, random_state=random_state_amostra)
 
 
 class DadosMLAbstrato(ABC):

@@ -13,7 +13,7 @@ def executar_experimento_rede_elastica(tam_treino=0.7, random_state_amostra=42, 
     )
 
     experimentar_funcional(
-        "Experimento da Rede Elástica",
+        "Experimento Rede Elástica",
         dados, 
         sklearn_ElasticNet_ML,
         alpha=alpha,

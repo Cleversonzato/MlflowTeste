@@ -1,5 +1,7 @@
 # Teste de uso do MLflow
 
+ - Atualizar o ambiente com as novas versões, futuramente 
+
  - ambiente:
 python3 -m venv '.mlflow'
 source .mlflow/bin/activate

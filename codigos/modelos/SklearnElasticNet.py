@@ -44,7 +44,34 @@ def sklearn_ElasticNet_ML(dados, alpha: float, l1:float, random_state_modelo:int
     mlflow.log_metric("mae", mae)
     mlflow.set_tag("release.version", "teste!")
 
-    mlflow.sklearn.log_model(modelo, artifact_path='RedeElastica', registered_model_name="RedeElastica", signature=assinatura_modelo())
 
+    #Se alterar a versão do modelo:
+    info_modelo = mlflow.sklearn.log_model(
+        modelo,
+        artifact_path='RedeElastica',
+        registered_model_name="RedeElastica",
+        signature=assinatura_modelo(),
+        pip_requirements=["-r requirements.txt"] #como se fosse um pip install -> []
+       )
+
+    # Abaixo, 
+    # - Necessita do pip install SHAP
+    # - Incompatível com pycaret:
+    #           ERROR: pycaret 2.3.6 has requirement scikit-learn==0.23.2, but you'll have scikit-learn 0.24.0 which is incompatible.
+
+    df_eval = dados.teste_x
+    df_eval['Rating'] = dados.teste_y
+    df_eval['Review Date'] = df_eval['Review Date'].astype('int32')
+    df_eval['Cocoa Percent'] = df_eval['Cocoa Percent'].astype('float32')
+
+    #este aparece no run
+    result = mlflow.evaluate(
+        model = info_modelo.model_uri,
+        data = df_eval,
+        targets = 'Rating',
+        model_type="regressor", # ou classifier
+        dataset_name="dados de teste",
+        evaluators=["default"],
+    )
 
    
