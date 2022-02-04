@@ -19,4 +19,10 @@ http://localhost:5000/
 
 
     - executar no root:
+ ```
  python3 exec.py RedeElastica
+ #ou 
+ python3 exec.py VoltaDaLinha
+ #ou
+ python3 exec.py DoPycaret
+ ```
