@@ -3,8 +3,11 @@
  - Atualizar o ambiente com as novas versões, futuramente 
 
  - ambiente:
+ - 
 python3 -m venv '.mlflow'
+
 source .mlflow/bin/activate
+
 pip install -r requirements.txt
 
  - ui do mlflow 
