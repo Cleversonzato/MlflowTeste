@@ -9,6 +9,9 @@ pip install -r requirements.txt
 
  - ui do mlflow 
 mlflow ui --host 0.0.0.0 --port 5000
+# ui com backend sqlitle
+mlflow ui --host 0.0.0.0 --port 5000 --default-artifact-root mlruns --backend-store-uri sqlite:///mlruns/sqlitle.db
+
 http://localhost:5000/
 
 
