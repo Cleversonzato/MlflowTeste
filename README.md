@@ -30,3 +30,9 @@ mlflow ui --host 0.0.0.0 --port 5000 --default-artifact-root mlruns --backend-st
  #ou
  python3 exec.py DoPycaret
  ```
+
+
+- Os dados utilizados aqui estão em:
+https://www.kaggle.com/rtatman/chocolate-bar-ratings/download
+
+Coloque eles em dados/brutos/chocolate_ratings.csv caso queria rodar tudo sem precisar alterar configurações
